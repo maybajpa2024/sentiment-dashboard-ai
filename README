@@ -1,14 +1,19 @@
-# 🤖 Earnings Call Sentiment Dashboard (GPT-4 powered)
+# 🤖 Earnings Call Sentiment Dashboard (GPT‑4 powered)
 
-A simple, investor-grade Streamlit app that uses OpenAI GPT-4-turbo to analyze earnings call transcripts and extract:
+Investor-grade Streamlit app that uses GPT‑4‑turbo to analyze earnings call transcripts and extract:
 
-- 📊 Sentiment breakdown (% Positive / Neutral / Negative)
-- 🧠 Overall tone (Optimistic, Neutral, Cautiously Optimistic, etc.)
-- 🗣️ Key management quotes with tone labels
-- ✅ Business takeaways (revenue, margins, guidance, risks)
-- 📈 Industry trends and 🧪 product mix insights
-- 🏢 Auto-detects Company Name + Sector
+- 📊 Sentiment breakdown (% Positive / Neutral / Negative)  
+- 🧠 Overall tone (Optimistic, Cautiously Optimistic...)  
+- 🗣️ Key quotes with tone labels  
+- ✅ Business takeaways (revenue, margins, guidance, risks)  
+- 📈 Industry trends & 🧪 product/segment insights  
+- 🏢 Auto-detects Company & Sector
+
+---
 
 ## 🚀 How to Run Locally
 
-1. Clone the repo:
+1. Clone:
+   ```bash
+   git clone https://github.com/maybajpa2024/sentiment-dashboard-ai.git
+   cd sentiment-dashboard-ai
