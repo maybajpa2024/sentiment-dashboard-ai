@@ -7,7 +7,7 @@ import pdfplumber
 st.set_page_config(page_title="Earnings Call Analysis Dashboard", layout="wide")
 st.title("📞 AI-Powered Earnings Call Insights (NotebookLM Style)")
 
-# --- Input Mode Selection ---
+# --- Input Method Selector ---
 st.subheader("Choose Input Method")
 input_mode = st.radio("Select how you want to provide the transcript:", ["Paste Text", "Upload PDF"])
 
@@ -27,13 +27,13 @@ elif input_mode == "Upload PDF":
                     all_text += page_text + "\n"
             transcript_text = all_text
 
-# --- GPT Analysis Trigger ---
+# --- If transcript is available, analyze ---
 if transcript_text.strip():
     with st.spinner("Analyzing transcript using GPT-4..."):
         raw = sa.analyze_sentiment(transcript_text)
         result = json.loads(raw)
 
-    # --- Company & Sector ---
+    # --- Company Info ---
     st.subheader("🏢 Company Overview")
     c1, c2 = st.columns(2)
     c1.metric("Company", result.get("company_name", "N/A"))
