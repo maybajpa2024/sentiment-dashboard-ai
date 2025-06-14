@@ -1,7 +1,7 @@
 import os
 from openai import OpenAI
 
-# Use the new OpenAI client from SDK v1.0.0+
+# Use OpenAI client from v1.0+
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def analyze_sentiment(transcript_text: str) -> str:
@@ -25,7 +25,7 @@ You are a financial analyst LLM assistant. Analyze this earnings call transcript
   "product_mix": ["..."]
 }}
 
-Focus on clarity, business impact, and insightfulness. No commentary or extra output.
+Be precise. Avoid any text outside this JSON format.
 
 Transcript:
 {transcript_text}
