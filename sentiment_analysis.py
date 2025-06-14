@@ -1,21 +1,22 @@
 import os
 from openai import OpenAI
 
-# Use OpenAI client from v1.0+
 client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
 
 def analyze_sentiment(transcript_text: str) -> str:
     prompt = f"""
-You are a financial analyst LLM assistant. Analyze this earnings call transcript and return structured insights in the following JSON format:
+You are a financial analyst LLM. Extract only the following JSON from the transcript below. Do not include any commentary or prefix.
+
+Return this exact format:
 
 {{
   "company_name": "...",
   "sector_name": "...",
   "overall_sentiment": "...",
   "sentiment_breakdown": {{
-    "positive": ...,
-    "neutral": ...,
-    "negative": ...
+    "positive": 0,
+    "neutral": 0,
+    "negative": 0
   }},
   "key_quotes": [
     {{"quote": "...", "sentiment": "..."}}
@@ -25,16 +26,13 @@ You are a financial analyst LLM assistant. Analyze this earnings call transcript
   "product_mix": ["..."]
 }}
 
-Be precise. Avoid any text outside this JSON format.
-
 Transcript:
 {transcript_text}
 """
-
     response = client.chat.completions.create(
         model="gpt-4-turbo",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.2
     )
 
-    return response.choices[0].message.content
+    return response.choices[0].message.content.strip()
