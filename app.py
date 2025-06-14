@@ -7,7 +7,7 @@ import pdfplumber
 st.set_page_config(page_title="Earnings Call Analysis Dashboard", layout="wide")
 st.title("📞 AI-Powered Earnings Call Insights (NotebookLM Style)")
 
-# --- Input Method Selector ---
+# --- Input Mode ---
 st.subheader("Choose Input Method")
 input_mode = st.radio("Select how you want to provide the transcript:", ["Paste Text", "Upload PDF"])
 
@@ -27,13 +27,22 @@ elif input_mode == "Upload PDF":
                     all_text += page_text + "\n"
             transcript_text = all_text
 
-# --- If transcript is available, analyze ---
+# --- Run GPT-4 analysis if input is available ---
 if transcript_text.strip():
     with st.spinner("Analyzing transcript using GPT-4..."):
         raw = sa.analyze_sentiment(transcript_text)
-        result = json.loads(raw)
 
-    # --- Company Info ---
+        # 🧪 DEBUG: Show raw LLM output
+        st.subheader("🔍 GPT Raw Output (Debug)")
+        st.code(raw, language="json")
+
+        try:
+            result = json.loads(raw)
+        except json.JSONDecodeError:
+            st.error("⚠️ GPT did not return valid JSON. Please try again.")
+            st.stop()
+
+    # --- Company Overview ---
     st.subheader("🏢 Company Overview")
     c1, c2 = st.columns(2)
     c1.metric("Company", result.get("company_name", "N/A"))
@@ -41,8 +50,8 @@ if transcript_text.strip():
 
     st.markdown("---")
 
-    # --- Dashboard Tabs ---
-    tab1, tab2, tab3, tab4 = st.tabs(["📊 Sentiment", "🗣️ Key Quotes", "✅ Business Insights", "📈 Trends & Mix"])
+    # --- Tabs for Insights ---
+    tab1, tab2, tab3, tab4 = st.tabs(["📊 Sentiment", "🗣️ Key Quotes", "✅ Business Takeaways", "📈 Trends & Mix"])
 
     with tab1:
         st.subheader("Sentiment Overview")
